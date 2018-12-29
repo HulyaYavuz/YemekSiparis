@@ -1,0 +1,161 @@
+﻿
+@model List<ETicaretF.Models.Cart>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+@*<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+@{
+    /**/
+
+
+    ETicaretF.Models.Customer logonCustomer = (ETicaretF.Models.Customer)Session["LogonCustomer"];
+}
+
+<script>
+    $(document).ready(function myfunction() {
+        $(".addtobasket").click(function myfunction() {
+            var uid = $(this).attr("data-id");
+            $.ajax({
+                type: "GET",
+                url: "/Sepet/AddBasket",
+                data: { id: uid },
+                success: function myfunction() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Sepet/Basket",
+                        async: false,
+                        success: function VeriGetir(veri) {
+                            console.log("test");
+                            window.location.reload();
+
+                        }
+
+                    })
+                },
+                error: function myfunction() {
+                    alert("Hata : Ürün Sepete Eklenemedi.");
+                }
+            });
+        });
+    });
+
+    $(document).ready(function myfunction() {
+        $(".deletetobasket").click(function myfunction() {
+            var uid = $(this).attr("data-id");
+            $.ajax({
+                type: "GET",
+                url: "/Sepet/AddBasket",
+                data: { id: uid, remove: true },
+                success: function myfunction() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Sepet/Basket",
+                        async: false,
+                        success: function VeriGetir(veri) {
+                            console.log("test");
+                            window.location.reload();
+
+                        }
+
+                    })
+                },
+                error: function myfunction() {
+                    alert("Hata : Ürün Sepete Eklenemedi.");
+                }
+            });
+        });
+    });
+</script>
+
+
+@using (Html.BeginForm("Buy", "Sepet"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <table class="table ">
+                    <thead>
+                        <tr style="color: #fff !important;">
+                            <th></th>
+                            <th>Adet</th>
+                            <th class="text-center">Fiyat</th>
+                            <th class="text-center">Toplam</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (ETicaretF.Models.Cart item in Model)
+                            {
+                                <tr>
+                                    <td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="~/images/@item.Product.ProductImage" style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading" style="color: #fac564 !important;"> @item.Product.Name</h4>
+                                                @*<h5 class="media-heading"> by <a href="#">Brand name</a></h5>*@
+                                                <span>@item.Product.Description </span>@*<span class="text-success"><strong>In Stock</strong></span>*@
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                                        <strong style="color: #fff !important;">@item.Count</strong>
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong style="color: #fff !important;">@item.Product.Price</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong style="color: #fff !important;">@(item.Product.Price * item.Count)</strong></td>
+                                    <td>
+                                        <a href="#" class="addtobasket btn-success" data-id="@item.Product.Id" style="color: #fff !important;">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>&nbsp;
+                                        <a href="#" class="deletetobasket btn-danger" data-id="@item.Product.Id?remove=true" style="color: #fff !important;">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </a>
+                                    </td>
+
+                                    <td class="col-sm-1 col-md-1">
+                                        <button type="button" class="btn" style="background-color: #fac564 !important; color: #fff !important;">
+                                            <span class="glyphicon glyphicon-remove"></span> Sil
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>   </td>
+                            <td><h3>Toplam</h3></td>
+                            @if (Model != null)
+                            {
+                                <td class="text-right"><h3><strong>@ViewBag.TotalPrice.ToString("C2")</strong></h3></td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> Alışverişe Devam Et
+                                </button>
+                            </td>
+                            <td>
+                                @*<button type="button" class="payproduct btn btn-success">
+                                        Satın Al <span class="glyphicon glyphicon-play"></span>
+                                    </button>*@
+                                @*<p><a href="/Home/Pay" class="payproduct btn btn-success"> Satın Al <span class="glyphicon glyphicon-play"></span></a></p>*@
+
+                                <p></p>
+                                <button type="submit" class="payproduct btn btn-success">
+                                    <span class="glyphicon glyphicon-play"></span> Satın Al
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,158 @@
+﻿@model ETicaretF.Models.Customer
+@{
+                /**/
+
+                ViewBag.Title = "Buy";
+}
+
+<link href="~/PayPage/css/core-style.css" rel="stylesheet" />
+@*<link href="~/PayPage/style.css" rel="stylesheet" />*@
+@*<link href="~/PayPage/css/responsive.css" rel="stylesheet" />*@
+
+
+
+<!-- ****** Checkout Area Start ****** -->
+@using (Html.BeginForm("Pay", "Sepet", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+{
+    <script>
+        $(document).ready(function () {
+            $(".pay").click(function () {
+                var typ = "";
+                $('.paytype :chechked').each(function () {
+                    typ = $(this).val();
+                    console.log(typ);
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "/Sepet/Pay",
+                    data: { id: typ },
+                    success: function myfunction() {
+                        console.log(typ);
+                    },
+                    error: function myfunction() {
+                        alert("Hata : Ürün Sepete Eklenemedi.");
+                    }
+                });
+            });
+        });
+    </script>
+    <div class="checkout_area section_padding_100" style="color: #fff !important;">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12 col-md-6">
+                    <div class="checkout_details_area mt-50 clearfix">
+
+                        <div class="cart-page-heading">
+                            <h5>Fatura Adresi</h5>
+                        </div>
+
+                        <form action="#" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="first_name">Adınız <span>*</span></label>
+                                    @*<input type="text" class="form-control" id="first_name" value="" required>*@
+                                    <p required> @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Adınız" } })</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="last_name">Soyadınız <span>*</span></label>
+                                    <input type="text" class="form-control" id="last_name" value="" required>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label for="street_address">Adres <span>*</span></label>
+                                    <p required> @Html.TextAreaFor(model => model.BillAdress, new { @class = "form-control", placeholder = "Fatura Adresiniz..." })</p>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="street_address">Adres <span>*</span></label>
+                                    @Html.TextAreaFor(model => model.DeliveryAdress, new { @class = "form-control", placeholder = "Gönderi Adresiniz..." })
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="phone_number">Telefon : <span>*</span></label>
+                                    <p required>@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "(0XXX)XXXXXXX" } })</p>
+                                </div>
+                                <div class="col-12 mb-4">
+                                    <label for="email_address">Email Adres <span>*</span></label>
+                                    <p required> @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "example@example.com" } })</p>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="custom-control custom-checkbox d-block">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                        <label class="custom-control-label" for="customCheck3">Kampanyalardan haberdar olmak istiyorum.</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+                    <div class="order-details-confirmation">
+
+                        <div class="cart-page-heading">
+                            <h5>Your Order</h5>
+                            <p>The Details</p>
+                        </div>
+                        <ul class="order-details-form mb-4">
+
+                            @{Html.RenderAction("HesapOzet", "Sepet");}
+
+                        </ul>
+
+
+
+                        <div id="accordion" role="tablist" class="mb-4 paytype">
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingTwo">
+                                    <h6 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-controls="collapseTwo"><i class="fa fa-circle-o mr-3"></i>Kapıda Ödeme</a>
+                                        <input type="checkbox" value="1" />
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingThree">
+                                    <h6 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><i class="fa fa-circle-o mr-3"></i>Banka/Kredi Kart</a>
+                                    </h6>
+                                </div>
+                                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse quo sint repudiandae suscipit ab soluta delectus voluptate, vero vitae</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingFour">
+                                    <h6 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour"><i class="fa fa-circle-o mr-3"></i>Havale/EFT</a>
+                                    </h6>
+                                </div>
+                                <div id="collapseFour" class="collapse show" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est cum autem eveniet saepe fugit, impedit magni.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="payproduct btn karl-checkout-btn pay">
+                            <span class="glyphicon glyphicon-play"></span> Öde
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<!-- ****** Checkout Area End ****** -->
+@*<script src="~/PayPage/js/popper.min.js"></script>
+    <script src="~/PayPage/js/bootstrap.min.js"></script>
+    <script src="~/PayPage/js/plugins.js"></script>
+    <script src="~/PayPage/js/active.js"></script>*@

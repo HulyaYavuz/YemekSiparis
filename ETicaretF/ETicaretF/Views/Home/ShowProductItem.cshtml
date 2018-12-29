@@ -1,0 +1,91 @@
+﻿@using ETicaretF.Models
+@model Product
+
+@{
+    ViewBag.Title = "ShowFoodItem";
+}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="~/Content/ProductDetail.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function myfunction() {
+        $(".addtobasket").click(function myfunction() {
+            var uid = $(this).attr("id");
+            $.ajax({
+                type: "GET",
+                url: "/Sepet/AddBasket",
+                data: { id: uid },
+                success: function myfunction() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Sepet/MiniSepet",
+                        async: false,
+                        success: function VeriGetir(veri) {
+                            console.log("test");
+                            $(".cart-all").html('');
+                            $(".cart-all").html(veri);
+                        }
+
+                    })
+                },
+                error: function myfunction() {
+                    alert("Hata : Ürün Sepete Eklenemedi.");
+                }
+            })
+        })
+    })
+</script>
+
+<div class="container showpro">
+    <br>
+    <div class=" border-0">
+        <div class="row">
+            <aside class="col-sm-4">
+                <article class="gallery-wrap">
+                    <div class="img-small-wrap">
+                        <div> <a href="#"><img src="~/images/@Model.ProductImage"></a></div>
+                    </div>
+                </article>
+            </aside>
+            <aside class="col-sm-5">
+                <article class="card-body m-0 pt-0 pl-5">
+                    <h3 class="title text-uppercase"><span class="price-title">@Model.Name</span></h3>
+
+                    <div class="mb-3 mt-3">
+                        <span class="h7 text-success">@Model.Description</span>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <span class="price-title">Fiyat :</span>
+                        <span class="price color-price-waanbii">@Model.Price ₺<sup></sup></span>
+                    </div>
+
+                    @foreach (ProductItem item in ViewBag.ProductItem)
+                    {
+                    <dl class="param param-inline">
+                        <dt> <span class="price-title">@item.ItemName :</span> </dt>
+                       
+                        <dd>
+                            <select class="form-control form-control-sm" style="width:70px;">
+                                <option> Evet </option>
+                                <option> Hayır </option>
+                            </select>
+                        </dd>
+                    </dl>
+                    }
+
+                    <div class="row mb-4 mt-4">
+                        <button class="addtobasket btn btn-white btn-outline-white" type="button" id="@Model.Id"><i class="fa fa-shopping-cart"></i>Sepete Ekle</button>
+                    </div>
+                </article>
+            </aside>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaretF", "ETicaretF\ETicaretF.csproj", "{9F57E2CE-2CA0-480F-A605-72624012FF80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F57E2CE-2CA0-480F-A605-72624012FF80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F57E2CE-2CA0-480F-A605-72624012FF80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F57E2CE-2CA0-480F-A605-72624012FF80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F57E2CE-2CA0-480F-A605-72624012FF80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {070BC1D3-0D32-401F-B936-80F9B3212A82}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,127 @@
+﻿@model List<ETicaretF.Models.Cart>
+
+<link href="~/Content/MiniSepetWidget.css" rel="stylesheet" />
+<script>
+        $(document).ready(function myfunction() {
+            $(".DeleteProduct").click(function deleteProduct() {
+                var uId = $(this).attr("name");
+                var rem = true;
+                $.ajax({
+                    type: "GET",
+                    url: "/Sepet/AddBasket",
+                    data: { id: uId ,remove:rem},
+                    success: function myfunction() {
+                        $.ajax({
+                            type: "GET",
+                            url: "/Sepet/MiniSepet",
+                            async: false,
+                            success: function VeriGetir(veri) {
+                                $(".cart-all").html('');
+                                $(".cart-all").html(veri);
+                            }
+
+                        })
+                    },
+                    error: function myfunction() {
+                        alert("Sepetten ürün silinemedi. ");
+                    }
+                })
+            })
+        })
+
+        $(document).ready(function sepetegit() {
+            $(".gotobasket").click(function goBasket() {
+                var uId = $(this).attr("id");
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Sepet/Basket",
+                    data: { id: uId },
+                    success: function myfunction() {
+                        console.log("test");
+
+                    },
+                    error: function myfunction() {
+                        alert("Sepetten ürün silinemedi. ");
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $(".cart-all").hover(
+                function () {
+                    $('.inside-cart', this).not('.in .inside-cart').stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.inside-cart', this).not('.in .inside-cart').stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+
+</script>
+
+<div class="cart-all" style="padding-top:22px">
+    <div class="">
+        <div class="panel-heading" id="accordion">
+
+            <p>
+                <span> Sepet </span>
+                @if (Model != null)
+                {
+                    <span>  @Model.Sum(x => x.Count)</span>
+                }
+                else
+                {
+                    <span> </span>
+                }
+            </p>
+        </div>
+        <div class="panel-collapse collapse inside-cart" id="collapseOne">
+            <div class="panel-body">
+                <ul class="chat">
+                    @if (Model != null)
+                    {
+                        foreach (ETicaretF.Models.Cart item in Model)
+                        {
+                            <li class="left clearfix">
+                                @if (item.Product.ProductImage != null)
+                                {
+                                    <span class="chat-img pull-left">
+                                        <img src="~/images/@item.Product.ProductImage" alt="@item.Product.Name" class="img-circle" style="width: 72px; height: 72px;" />
+                                    </span>
+                                }
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <strong class="primary-font"> @item.Product.Name &nbsp; <a class="DeleteProduct" name="@item.Product.Id">x</a></strong>
+                                    </div>
+                                    
+                                    @*<p>Tutar : @item.Tutar.ToString("C2") </p>*@
+                                    <p>Adet : @item.Count</p>
+
+
+
+                                </div>
+                            </li>
+                        }
+                    }
+
+                </ul>
+                @*@if (Model != null)
+                    {
+                        <span>
+                            @Model.ToplamTutar.ToString("C2")
+                        </span>
+                    }
+                    else
+                    {
+                        <span>0 ₺</span>
+                    }*@
+                <br />
+                <a href="/Sepet/Basket" class="gotobasket btn btn-white btn-outline-white"> Sepete Git</a>
+            </div>
+        </div>
+    </div>
+</div>
+

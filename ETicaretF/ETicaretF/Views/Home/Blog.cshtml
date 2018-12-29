@@ -1,0 +1,55 @@
+﻿@using ETicaretF.Models
+@model List<Blog>
+@{
+    ViewBag.Title = "Blog";
+}
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate text-center">
+                <h2 class="mb-4">#PİZZA</h2>
+                <p>Pizza’nla çekildiğin fotoğrafını #pizza hashtagiyle Instagram veya Twittera gönder ya da <a href="/Home/Contact">buraya</a>  tıklayarak yükle, sitemizde yayınlansın anında %20 indirim kazan.</p>
+            </div>
+        </div>
+        <div class="row d-flex">
+            @if (Model != null)
+            {
+                foreach (Blog item in Model)
+                {
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry align-self-stretch">
+                            <a href="blog-single.html" class="block-20" style="background-image: url('../../images/@item.ProductImage');">
+                            </a>
+                            <div class="text py-4 d-block">
+                                <div class="meta">
+                                    <div><a href="#"> @item.AddedDate.ToShortDateString() </a></div>
+                                    <div><a href="#">@item.Name</a></div>
+                                    <div><a href="#" class="meta-chat"><span class="icon-chat"></span> @item.ReadCount</a></div>
+                                </div>
+                                <h3 class="heading mt-2"><a href="#">@item.ProductName</a></h3>
+                                <p>@item.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="block-27">
+                    <ul>
+                        <li><a href="#">&lt;</a></li>
+                        <li class="active"><span>1</span></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

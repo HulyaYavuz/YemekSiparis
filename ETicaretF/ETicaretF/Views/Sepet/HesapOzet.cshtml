@@ -1,0 +1,19 @@
+﻿@model List<ETicaretF.Models.Cart>
+
+
+@if (Model != null)
+{
+    foreach (ETicaretF.Models.Cart item in Model)
+    {
+
+        <li><span>Ürün Adı</span> <span>Toplam</span></li>
+        <li><span>@item.Product.Name</span> <span>@(item.Count * item.Product.Price)</span></li>
+
+
+
+    }
+    <li><span>Shipping</span> <span>Free</span></li>
+    <li><span>Total</span> <span>$59.90</span></li>
+    <li><span>Toplam Tutar</span> <span>@*@ViewBag.TotalPrice.ToString("C2")*@</span></li>
+}
+

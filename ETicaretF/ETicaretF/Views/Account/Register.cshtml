@@ -1,0 +1,62 @@
+﻿@using ETicaretF.Models
+@model Customer
+@{
+    ViewBag.Title = "Register";
+}
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<div class="row">
+    <div class="col-sm-2">
+
+    </div>
+    <div class="col-sm-7" style="margin-left:25px;">
+
+        @using (Html.BeginForm())
+        {
+        <div>
+            <div class="text-center">
+                <h2>Kayıt Ol</h2>
+
+                <small style="color:red;">@TempData["Info"]</small><br />
+
+                @if (string.IsNullOrEmpty((string)ViewBag.ReError) == false)
+                {
+                    <small style="color:red;">@ViewBag.ReError</small>
+                }
+                else
+                {
+                    <small>Lütfen e-posta ve şifrenizi giriniz.</small>
+                }
+            </div>
+            <div>
+                <div class="form-group">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "adınız", type = "text", required = "required" })
+
+                </div>>
+                <div class="form-group">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "e-mail adres", type = "email" })
+
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "şifre", type = "password" })
+
+                </div>
+
+
+            </div><br /><br />
+           >
+            <button type="submit" class="btn btn-warning text-right">
+                <span class="glyphicon glyphicon-floppy-saved"></span> Kayıt Ol
+            </button>
+        </div>
+        }
+
+    </div>
+    <div class="col-sm-1">
+
+    </div>
+   
+
+</div><br /><br />
+
